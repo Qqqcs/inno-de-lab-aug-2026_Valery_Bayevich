@@ -17,7 +17,7 @@
 - FirstName: VARCHAR(50), NOT NULL
 - LastName: VARCHAR(50), NOT NULL
 - PhoneNumber: VARCHAR(20), NOT NULL, UNIQUE
-- Emali: VARCHAR(100), NOT NULL, UNIQUE
+- Email: VARCHAR(100), NOT NULL, UNIQUE
 - Constraints:
 - PK_Buyer: PRIMARY KEY (BuyerID)
 - UQ_BuyerPhoneNumber: UNIQUE (PhoneNumber)
@@ -29,11 +29,11 @@
 - SupplierName: VARCHAR(100), NOT NULL
 - SupplierAddress: VARCHAR(255), NOT NULL
 - PhoneNumber: VARCHAR(20), NOT NULL, UNIQUE
-- Emali: VARCHAR(100), NOT NULL, UNIQUE
+- Email: VARCHAR(100), NOT NULL, UNIQUE
 - Constraints:
 - PK_Supplier: PRIMARY KEY (SupplierID)
 - UQ_SupplierPhoneNumber: UNIQUE (PhoneNumber)
-- UQ_SupplierEmail: UNIQUE (Emali)
+- UQ_SupplierEmail: UNIQUE (Email)
 - Table Name: Category
 - Description: Хранит информацию о категориях товаров
 - Attributes:
@@ -77,7 +77,7 @@
 - Status: VARCHAR(20), NOT NULL
 - Constraints:
 - PK_CustomerOrder: PRIMARY KEY (OrderID)
-- FK_ CustomerOrder_Buyer: FOREIGN KEY (BuyerID) REFERENCES(BuyerID)
+- FK_ CustomerOrder_Buyer: FOREIGN KEY (BuyerID) REFERENCES Buyer(BuyerID)
 - CHK_Dates: CHECK (PickupDate IS NULL OR PickupDate >= OrderDate)
 - Table Name: OrderItem
 - Description: Хранит информацию о позициях товаров в заказах
@@ -89,6 +89,7 @@
 - UnitPrice: NUMERIC(10,2), NOT NULL
 - Constraints:
 - PK_ OrderItem: PRIMARY KEY (OrderItemID)
+- UQ_OrderItem_Order_Product: UNIQUE (OrderID, ProductID)
 - FK_ OrderItem _Order: FOREIGN KEY (OrderID) REFERENCES  CustomerOrder (OrderID)
 - FK_ OrderItem _Product: FOREIGN KEY (ProductID) REFERENCES Product (ProductID)
 - CHK_OrderItem_Quantity: CHECK (Quantity > 0)
