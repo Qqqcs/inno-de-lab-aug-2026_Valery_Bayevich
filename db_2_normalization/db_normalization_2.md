@@ -1,0 +1,113 @@
+- Выбор сценария
+Для данной работы выбран сценарий: Онлайн-магазин электроники. Система будет управлять покупателями, поставщиками, товарами, брендами, заказами и их позициями.
+- Проектирование Базы Данных и Документация
+## Идентификация Сущностей и Атрибутов
+- Покупатель (Buyer)
+- Поставщик (Supplier)
+- Категория (Category)
+- Товар (Product)
+- Бренд (Brand)
+- Заказ (CustomerOrder)
+- Позиция заказа (OrderItem)
+## Проектирование Таблиц
+- Table Name: Buyer
+- Description: Хранит информацию об покупателях
+- Attributes:
+- BuyerID: INTEGER, PK, NOT NULL, UNIQUE
+- FirstName: VARCHAR(50), NOT NULL
+- LastName: VARCHAR(50), NOT NULL
+- PhoneNumber: VARCHAR(20), NOT NULL, UNIQUE
+- Email: VARCHAR(100), NOT NULL, UNIQUE
+- Constraints:
+- PK_Buyer: PRIMARY KEY (BuyerID)
+- UQ_BuyerPhoneNumber: UNIQUE (PhoneNumber)
+- UQ_BuyerEmail: UNIQUE (Email)
+- Table Name: Supplier
+- Description: Хранит информацию о поставщике
+- Attributes:
+- SupplierID: INTEGER, PK, NOT NULL, UNIQUE
+- SupplierName: VARCHAR(100), NOT NULL
+- SupplierAddress: VARCHAR(255), NOT NULL
+- PhoneNumber: VARCHAR(20), NOT NULL, UNIQUE
+- Email: VARCHAR(100), NOT NULL, UNIQUE
+- Constraints:
+- PK_Supplier: PRIMARY KEY (SupplierID)
+- UQ_SupplierPhoneNumber: UNIQUE (PhoneNumber)
+- UQ_SupplierEmail: UNIQUE (Email)
+- Table Name: Category
+- Description: Хранит информацию о категориях товаров
+- Attributes:
+- CategoryID: INTEGER, PK, NOT NULL, UNIQUE
+- CategoryName: VARCHAR(50), NOT NULL, UNIQUE
+- Constraints:
+- PK_Category: PRIMARY KEY (CategoryID)
+- UQ_CategoryName: UNIQUE (CategoryName)
+- Table Name: Product
+- Description: Хранит информацию о  товарах
+- Attributes:
+- ProductID: INTEGER, PK, NOT NULL, UNIQUE
+- CategoryID: INTEGER, FK, NOT NULL
+- BrandID: INTEGER, FK, NOT NULL
+- SupplierID: INTEGER, FK, NOT NULL
+- ProductName: VARCHAR(50), NOT NULL
+- ProductYear: INTEGER, NOT NULL
+- Price: NUMERIC(10,2), NOT NULL
+- Constraints:
+- PK_Product: PRIMARY KEY (ProductID)
+- FK_Product_Category: FOREIGN KEY (CategoryID) REFERENCES Category(CategoryID)
+- FK_Product_Brand: FOREIGN KEY (BrandID) REFERENCES Brand(BrandID)
+- FK_Product_Supplier: FOREIGN KEY (SupplierID) REFERENCES Supplier(SupplierID)
+- CHK_ProductYear: CHECK (ProductYear >= 2000 AND ProductYear <= 2050)
+- CHK_ProductPrice: CHECK (Price > 0)
+- Table Name: Brand
+- Description: Хранит информацию о брендах товаров
+- Attributes:
+- BrandID: INTEGER, PK, NOT NULL, UNIQUE
+- BrandName: VARCHAR(50), NOT NULL, UNIQUE
+- Constraints:
+- PK_Brand: PRIMARY KEY (BrandID)
+- UQ_BrandName: UNIQUE (BrandName)
+- Table Name: CustomerOrder
+- Description: Хранит информацию о заказе покупателя.
+- Attributes:
+- OrderID: INTEGER, PK, NOT NULL, UNIQUE
+- BuyerID: INTEGER, FK, NOT NULL
+- OrderDate: DATE, NOT NULL, DEFAULT CURRENT_DATE
+- PickupDate: DATE
+- Status: VARCHAR(20), NOT NULL
+- Constraints:
+- PK_CustomerOrder: PRIMARY KEY (OrderID)
+- FK_ CustomerOrder_Buyer: FOREIGN KEY (BuyerID) REFERENCES Buyer(BuyerID)
+- CHK_Dates: CHECK (PickupDate IS NULL OR PickupDate >= OrderDate)
+- Table Name: OrderItem
+- Description: Хранит информацию о позициях товаров в заказах
+- Attributes:
+- OrderItemID: INTEGER, PK, NOT NULL, UNIQUE
+- OrderID: INTEGER, FK, NOT NULL
+- ProductID: INTEGER, FK (REFERENCES Product), NOT NULL
+- Quantity: INTEGER, NOT NULL
+- UnitPrice: NUMERIC(10,2), NOT NULL
+- Constraints:
+- PK_ OrderItem: PRIMARY KEY (OrderItemID)
+- UQ_OrderItem_Order_Product: UNIQUE (OrderID, ProductID)
+- FK_ OrderItem _Order: FOREIGN KEY (OrderID) REFERENCES  CustomerOrder (OrderID)
+- FK_ OrderItem _Product: FOREIGN KEY (ProductID) REFERENCES Product (ProductID)
+- CHK_OrderItem_Quantity: CHECK (Quantity > 0)
+- CHK_OrderItem_UnitPrice: CHECK (UnitPrice > 0)
+
+## Взаимосвязи
+- Buyer и CustomerOrder (Один-ко-Многим): Один покупатель может оформить множество заказов, но каждый конкретный заказ завязан только к одному покупателю.
+- CustomerOrder.BuyerID является внешним ключом, ссылающимся на Buyer.BuyerID
+- Category и Product (Один-ко-Многим): Одна категория может содержать множество товаров, но товар не может относиться к нескольким категориям.
+- Product.CategoryID является внешним ключом, ссылающимся на Category.CategoryID
+- Brand и Product (Один-ко-Многим): Один бренд может содержать множество товаров, но один товар не может иметь несколько брендов
+- Product.BrandID является внешним ключом, ссылающимся на Brand.BrandID
+- Supplier и Product (Один-ко-Многим): Один поставщик может содержать множество товаров, но товар не может иметь несколько поставщиков одновременно.
+- Product.SupplierID является внешним ключом, ссылающимся на Supplier.SupplierID
+- CustomerOrder и OrderItem (Один-ко-Многим): Один заказ может содержать несколько позиций заказа, но каждая позиция относится только к одному конкретному заказу
+- OrderItem.OrderID является внешним ключом, ссылающимся на CustomerOrder.OrderID
+- Product и OrderItem (Один-ко-Многим): Один товар может встречаться во множестве позиций заказов, но каждая позиция заказа относится только к одному конкретному товару.
+- OrderItem.ProductID является внешним ключом, ссылающимся на Product.ProductID
+- CustomerOrder и Product (Многие-ко-Многим): Один заказ может содержать множество товаров, и один товар может быть во множестве заказов. Связь многие-ко-многим реализована через промежуточную таблицу OrderItem
+- OrderItem.OrderID ссылается на CustomerOrder.OrderID
+- OrderItem.ProductID ссылается на Product.ProductID
