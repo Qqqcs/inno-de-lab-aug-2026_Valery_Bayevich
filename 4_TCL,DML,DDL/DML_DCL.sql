@@ -17,7 +17,7 @@ DELETE FROM Employees e
 		SELECT 1
 		FROM EmployeeProjects ep
 		WHERE ep.EmployeeID = e.EmployeeID
-	) --Удалили сотрудников, не назначенных ни на один проект
+	); --Удалили сотрудников, не назначенных ни на один проект
 	
 	
 SELECT * FROM Projects; 

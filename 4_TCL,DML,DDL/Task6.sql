@@ -16,7 +16,7 @@ WHERE EXISTS (
 	JOIN Employees e
 		ON e.employeeID = ep.EmployeeID 
 	WHERE ep.ProjectID = p.ProjectID
-		AND e.Department = 'IT' --Оно ничего не обновит, тк рабочие из IT перешли в Seniour IT 
+		AND e.Department = 'IT' --Оно ничего не обновит, тк рабочие из IT перешли в Senior IT 
 
 )
 
@@ -28,7 +28,7 @@ WHERE EXISTS (
 	JOIN Employees e
 		ON e.employeeID = ep.EmployeeID 
 	WHERE ep.ProjectID = p.ProjectID
-		AND e.Department = 'Seniour IT' --То же самое, но увеличит бюджет всех проектов
+		AND e.Department = 'Senior IT' --То же самое, но увеличит бюджет всех проектов
 
 )
 
