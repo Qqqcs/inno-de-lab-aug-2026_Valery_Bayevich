@@ -1,7 +1,7 @@
 CREATE FUNCTION CalculateAnnualBonus(
 employee_id INT,
 salary decimal
-);
+)
 RETURNS decimal
 LANGUAGE PLpgSQL
 AS $$
