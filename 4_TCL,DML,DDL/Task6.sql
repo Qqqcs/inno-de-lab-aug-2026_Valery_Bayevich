@@ -18,7 +18,7 @@ WHERE EXISTS (
 	WHERE ep.ProjectID = p.ProjectID
 		AND e.Department = 'IT' --Оно ничего не обновит, тк рабочие из IT перешли в Senior IT 
 
-)
+);
 
 UPDATE Projects p
 SET Budget = Budget * 1.10
@@ -30,7 +30,7 @@ WHERE EXISTS (
 	WHERE ep.ProjectID = p.ProjectID
 		AND e.Department = 'Senior IT' --То же самое, но увеличит бюджет всех проектов
 
-)
+);
 
 
 UPDATE Projects 
@@ -45,7 +45,7 @@ WITH new_employee AS (
 	INSERT INTO Employees (FirstName, LastName, Department, Salary)
 	VALUES ('Gordon', 'Freeman', 'Designer', 90200) --Создаем нового сотрудника
 	RETURNING EmployeeID
-)
+);
 
 INSERT INTO employeeProjects (EmployeeID, ProjectID, HoursWorked)
 SELECT

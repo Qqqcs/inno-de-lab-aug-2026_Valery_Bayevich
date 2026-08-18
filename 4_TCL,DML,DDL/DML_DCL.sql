@@ -10,7 +10,7 @@ UPDATE Employees
 	SET department = 'Senior IT'
 	WHERE salary > 70000; --Обновили отдел ребятам с большой зарплатой
 
-SELECT * FROM EmployeeProjects
+SELECT * FROM EmployeeProjects;
 
 DELETE FROM Employees e
 	WHERE NOT EXISTS (
