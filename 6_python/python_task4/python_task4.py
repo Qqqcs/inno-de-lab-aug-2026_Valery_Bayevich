@@ -1,4 +1,4 @@
-number = float(input("Введите целое число: "))
+number = int(input("Введите целое число: "))
 if number % 2 == 0:
     print(f"{number} - четное число")
 else:
