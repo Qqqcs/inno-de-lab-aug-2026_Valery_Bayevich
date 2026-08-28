@@ -13,7 +13,7 @@ cpu_loads = []
 ram_usages = []
 
 for node_name, cpu_load, ram_usage, status in system_telemetry: #распаковка кортежей в цикле for
-    if status != "online": #не трогаем офлайн узлы 
+    if status == "offline": #не трогаем офлайн узлы 
         continue
 
     active_nodes.append(node_name) # узлы которые в сети добавляем в список active_nodes
