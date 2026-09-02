@@ -27,7 +27,7 @@ def performance_logger (func: Callable) -> Callable:
         elapsed_time = end_time - start_time
         elapsed_time = round(elapsed_time, TIME_DECIMALS)
 
-        print(f"{PERFORMANCE_LOG_PREFIX} Функция {func.__name__} выполнена за {elapsed_time} секунд.")
+        print(f"{PERFORMANCE_LOG_PREFIX} Функция '{func.__name__}' выполнена за {elapsed_time} секунд.")
 
         return result
     
