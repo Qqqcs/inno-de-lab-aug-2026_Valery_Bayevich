@@ -1,12 +1,13 @@
 class Trainee:
+    """ Класс Trainee представляет стажера с именем, фамилией, баллами (score) и проходным баллом (passing_grade)"""
     def __init__ (
             self,
             name: str,
             surname: str,
             score: int = 0, 
-            passing_grade: int = 10
+            passing_grade: int  = 10
             ):
-        # инициализация данных стажера
+        """ Инициализация данных стажера: имя, фамилия, баллы и проходной балл """
         self.name: str = name
         self.surname: str = surname
         self.score = score
@@ -15,12 +16,14 @@ class Trainee:
     #получение текущего значения score
     @property
     def score (self) -> int:
+        """Возвращает текущее значение score"""
         return self.__score
 
     #Изменение score с проверкой на тип и значение
     @score.setter
     def score (self, value: int) -> None:
-        if not isinstance(value, int):
+        """Устанавливает новое значение score с проверкой на тип и значение"""
+        if type(value) is not int:
             raise ValueError(f"Expected value of type int, got {type(value )}") #в случае если передан не int, то ошибка
 
         if value < 0:
